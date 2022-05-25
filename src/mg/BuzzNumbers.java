@@ -2,19 +2,51 @@ package mg;
 
 public class BuzzNumbers {
 
-    void start(long number) {
+    void startOneNumber(long number) {
 
         if (!isNatural(number)) {
             System.exit(0);
         } else {
             System.out.println("Properties of " + number);
-            isEven(number);
-            isBuzzNumber(number);
-            duckNumber(number);
-            pallindormeCheck(number);
+            System.out.println("buzz: " + isBuzzNumber(number));
+            System.out.println("duck: " + duckNumber(number));
+            System.out.println("palindromic: " + pallindormeCheck(number));
+            System.out.println("gapful: " + isGapful(number));
+            System.out.println("even: " + isEven(number));
+            System.out.println("odd: " + !isEven(number));
             System.out.println();
         }
     }
+
+    void messenge (long number) {
+
+        if (isBuzzNumber(number)) {
+            System.out.print("buzz, ");
+        }
+        if (duckNumber(number)) {
+            System.out.print("duck, ");
+        }
+        if (pallindormeCheck(number)) {
+            System.out.print("palindromic, ");
+        }
+        if (isGapful(number)) {
+            System.out.print("gapful, ");
+        }
+
+        if (isEven(number)) {
+            System.out.print("even");
+        }
+        if (!isEven(number)) {
+            System.out.print("odd");
+        }
+    }
+
+    void startTwoNumbers (long number) {
+        System.out.print(number + " is ");
+       messenge(number);
+       System.out.println();
+    }
+
 
     private boolean isNatural(long number) {
 
@@ -26,56 +58,32 @@ public class BuzzNumbers {
         }
     }
 
-    private void isEven(long number) {
+    private boolean isEven(long number) {
 
-        if (number % 2 == 0) {
-            System.out.println("even: true");
-            System.out.println("odd: false");
-        } else {
-            System.out.println("even: false");
-            System.out.println("odd: true");
-        }
+        return number % 2 == 0;
     }
 
-    private void isBuzzNumber(long number) {
+    private boolean isBuzzNumber(long number) {
 
-        if (endsWithSeven(number) == true && divideBySeven(number) == true) {
-            System.out.println("buzz: true");
-        } else if (endsWithSeven(number) == true && divideBySeven(number) == false) {
-            System.out.println("buzz: true");
-        } else if (endsWithSeven(number) == false && divideBySeven(number) == true) {
-            System.out.println("buzz: true");
-        } else {
-            System.out.println("buzz: false");
-        }
+        return endsWithSeven(number) && divideBySeven(number)
+                || endsWithSeven(number) && !divideBySeven(number)
+                || !endsWithSeven(number) && divideBySeven(number);
     }
 
     private boolean endsWithSeven(long number) {
 
-        if (number % 10 == 7) {
-            return true;
-        } else {
-            return false;
-        }
+        return number % 10 == 7;
 
     }
 
     private boolean divideBySeven(long number) {
 
-        if (number % 7 == 0) {
-            return true;
-        } else
-            return false;
+        return number % 7 == 0;
     }
 
-    private void duckNumber (long number) {
+    private boolean duckNumber (long number) {
 
-        if (checkIfDuckNumber(number) == true) {
-            System.out.println("duck: true");
-        }
-        else {
-            System.out.println("duck: false");
-        }
+        return checkIfDuckNumber(number);
     }
 
     private boolean checkIfDuckNumber (long number) {
@@ -91,7 +99,7 @@ public class BuzzNumbers {
         return false;
     }
 
-    private void pallindormeCheck (long number) {
+    private boolean pallindormeCheck (long number) {
 
         long rest;
         long reverse = 0;
@@ -103,11 +111,15 @@ public class BuzzNumbers {
             original =  original / 10;
         }
 
-        if (number == reverse) {
-            System.out.println("palindromic: true");
-        }
-        else
-            System.out.println("palindromic: false");
+        return number == reverse;
     }
+
+    private static boolean isGapful(long number) {
+        String nStr = String.valueOf(number);
+        return nStr.length() >= 3 &&
+                number % Long.parseLong(nStr.charAt(0) + nStr.substring(nStr.length() - 1)) == 0;
+    }
+
+
 
 }
