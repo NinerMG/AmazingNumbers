@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class Menu {
 
+    String[] options = {"buzz", "duck", "palindromic", "gapful", "spy", "even", "odd"};
+
     public void mainMenu () {
 
         Scanner scanner = new Scanner(System.in);
@@ -20,13 +22,12 @@ public class Menu {
 
                 String[] inputArray = choice.split(" ");
 
-                long numberOne = Long.valueOf(inputArray[0]);
+                long numberOne = Long.parseLong(inputArray[0]);
 
                 if (numberOne < 0L) {
                     System.out.println("The first parameter should be a natural number or zero.");
                     greetings();
                     System.out.println("Enter a request:");
-                    status = true;
                 }
 
                 if (inputArray.length == 1) {
@@ -37,28 +38,30 @@ public class Menu {
                         System.out.println("The first parameter should be a natural number or zero.");
                         greetings();
                         System.out.println("Enter a request:");
-                        status = true;
                     } else {
                         buzzNumbers.startOneNumber(numberOne);
                         System.out.println("Enter a request:");
-                        status = true;
                     }
                 }
 
                 if (inputArray.length == 2) {
-                    long numberTwo = Long.valueOf(inputArray[1]);
+                    long numberTwo = Long.parseLong(inputArray[1]);
                     if (numberTwo <= 0) {
                         System.out.println("The second parameter should be a natural number.");
                         greetings();
                         System.out.println("Enter a request: ");
-                        status = true;
                     }
                     for (long i = 0; i < numberTwo; i++) {
                         buzzNumbers.startTwoNumbers(numberOne);
                         numberOne++;
                     }
                     System.out.println("Enter a request: ");
-                    status = true;
+                }
+
+                if (inputArray.length == 3) {
+                    String characterThree = inputArray[2];
+                    long numberTwo = Long.parseLong(inputArray[1]);
+                    checkProperty(characterThree,numberOne, numberTwo);
                 }
 
             }
@@ -84,6 +87,49 @@ public class Menu {
         System.out.println("enter 0 to exit.");
         System.out.println();
         System.out.println("Enter a request: ");
+    }
+
+    private void checkProperty (String property, long startNumber, long repeatNumber) {
+        BuzzNumbers buzzNumbers = new BuzzNumbers();
+
+        switch (property) {
+
+            case "even":
+                //sprawdzenie jakie kolejne liczby są parzyste
+                int counter = 0;
+                for (long i = startNumber; counter == repeatNumber; i++) {
+                   if (buzzNumbers.isEven(i)) {
+                       buzzNumbers.startTwoNumbers(i);
+                       counter++;
+                   }
+                }
+                break;
+
+            case "odd":
+                //sprawdzenie jakie kolejne liczby są nieparzyste
+                break;
+
+            case "buzz":
+                //sprawdzenie jakie kolejne liczby są buzz numbers
+                break;
+
+            case "duck":
+                //sprawdzenie jakie kolejne liczby są duck numbers
+                break;
+
+            case "palindromic":
+                //sprawdzenie jakie kolejne liczby są palindromami
+                break;
+
+            case "gapful":
+                //sprawdzenie jakie kolejne liczby są gapful numbers
+                break;
+
+            case "spy":
+                //sprawdzenie jakie kolejne liczby są parzyste
+                break;
+
+        }
     }
 
 

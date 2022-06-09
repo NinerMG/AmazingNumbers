@@ -12,6 +12,7 @@ public class BuzzNumbers {
             System.out.println("duck: " + duckNumber(number));
             System.out.println("palindromic: " + pallindormeCheck(number));
             System.out.println("gapful: " + isGapful(number));
+            System.out.println("spy: " + checkSpy(number));
             System.out.println("even: " + isEven(number));
             System.out.println("odd: " + !isEven(number));
             System.out.println();
@@ -31,6 +32,10 @@ public class BuzzNumbers {
         }
         if (isGapful(number)) {
             System.out.print("gapful, ");
+        }
+
+        if (checkSpy(number)) {
+            System.out.println("spy, ");
         }
 
         if (isEven(number)) {
@@ -58,7 +63,7 @@ public class BuzzNumbers {
         }
     }
 
-    private boolean isEven(long number) {
+     boolean isEven(long number) {
 
         return number % 2 == 0;
     }
@@ -118,6 +123,18 @@ public class BuzzNumbers {
         String nStr = String.valueOf(number);
         return nStr.length() >= 3 &&
                 number % Long.parseLong(nStr.charAt(0) + nStr.substring(nStr.length() - 1)) == 0;
+    }
+
+    private static boolean checkSpy (long number) {
+        long sum = 0;
+        long product = 1;
+        while (number != 0) {
+            long digit = number % 10;
+            sum += digit;
+            product *= digit;
+            number /= 10;
+        }
+        return sum == product;
     }
 
 
